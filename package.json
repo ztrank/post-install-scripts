@@ -1,0 +1,44 @@
+{
+  "author": "ztrank",
+  "name": "@trankzachary/post-install-scripts",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "@types/jest": "^24.0.18",
+    "typescript": "^3.5.3",
+    "@babel/preset-env": "^7.5.5",
+    "jest": "^24.9.0",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "tslint": "^5.19.0",
+    "ts-jest": "^24.0.2"
+  },
+  "types": "dist/index.d.ts",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prepare": "",
+    "build": "rmdir dist /s /q && tsc",
+    "version": "git add -A src",
+    "preversion": "npm test && npm run build && npm run lint",
+    "prepublishOnly": "npm test && npm run build && npm run lint",
+    "test": "jest",
+    "postversion": "git push && git push --tags",
+    "lint": " tslint -p tsconfig.json"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "url": "https://github.com/ztrank/post-install-scripts.git",
+    "type": "git"
+  },
+  "dependencies": {
+    "rxjs": "^6.5.2"
+  },
+  "bugs": {
+    "url": "https://github.com/ztrank/post-install-scripts/issues"
+  },
+  "homepage": "https://github.com/ztrank/post-install-scripts#readme"
+}
