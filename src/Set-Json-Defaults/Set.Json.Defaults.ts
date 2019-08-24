@@ -1,38 +1,22 @@
 import { Observable } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 import { IJsonUtil } from '../Utils/interfaces/IJSon.Util';
-import { PipelineRunner } from '../Pipeline.Runner';
+import { inject, injectable } from 'inversify';
+import { PipelineSymbols } from '../symbols';
 
-interface SetAppConfigOptions {
-    overwrite?: boolean;
-}
-
-interface SetAppConfigSettings {
-    overwrite: boolean;
-}
-
-export class SetJsonDefaults implements PipelineRunner {
-    private root: string;
-    private options: SetAppConfigSettings;
+@injectable()
+export class SetJsonDefaults {
 
     public constructor(
-        private jsonUtil: IJsonUtil,
-        private defaultJson: any,
-        options?: SetAppConfigOptions
-    ) {
-        this.options = {
-            overwrite: false,
-            ...options
-        };
-    }
+        @inject(PipelineSymbols.JSONUtil) private jsonUtil: IJsonUtil,
+        @inject(PipelineSymbols.ProjectRoot) private root: string
+    ) {}
 
-    public run(root: string, ...path: string[]): Observable<string> {
-        this.root = root;
+    public run(defaults: any, overwrite: boolean, ...path: string[]): Observable<void> {
         return this.jsonUtil.getJson(this.root, ...path)
             .pipe(
-                map(json => this.jsonUtil.setDefaults(json, this.defaultJson, this.options.overwrite)),
-                mergeMap(json => this.jsonUtil.setJson(json, this.root, ...path)),
-                map(() => this.root)
+                map(json => this.jsonUtil.setDefaults(json, defaults, overwrite)),
+                mergeMap(json => this.jsonUtil.setJson(json, this.root, ...path))
             );
     }
 }

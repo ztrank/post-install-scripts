@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { IFileUtil } from '../../../src/Utils/interfaces/IFile.Util';
 import { JsonUtil } from '../../../src/Utils/implementations/JSON.Util';
 import { of, throwError } from 'rxjs';

@@ -4,7 +4,9 @@ import fs from 'fs';
 import Path from 'path';
 import { mergeMap, map } from 'rxjs/operators';
 import { IFileUtil } from '../interfaces/IFile.Util';
+import { injectable } from 'inversify';
 
+@injectable()
 export class FileUtil implements IFileUtil {
 
     public getFile(root: string, ...paths: string[]): Observable<string> {

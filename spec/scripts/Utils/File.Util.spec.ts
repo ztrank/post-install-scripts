@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { FileUtil } from '../../../src/Utils/implementations/file.util';
 import fs from 'fs';
 import Path from 'path';

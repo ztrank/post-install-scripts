@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { IJsonUtil } from '../../../src/Utils/interfaces/IJSon.Util';
 import { of } from 'rxjs';
 import { SetJsonDefaults } from '../../../src/Set-Json-Defaults/Set.Json.Defaults';
@@ -46,11 +47,10 @@ beforeEach(() => {
     jsonUtil.setJson.mockClear();
 });
 
-test('Set-AppConfig', (done) => {
-    const setAppConfig = new SetJsonDefaults(<IJsonUtil>(jsonUtil), _defaults, {overwrite: false});
-    setAppConfig.run(_root, 'app.config.json')
-        .subscribe(res => {
-            expect(res).toBe(_root);
+test('Set-App.Config', (done) => {
+    const setAppConfig = new SetJsonDefaults(<IJsonUtil>(jsonUtil), _root);
+    setAppConfig.run(_defaults, false, 'app.config.json')
+        .subscribe(() => {
             expect(jsonUtil.getJson).toHaveBeenCalledTimes(1);
             expect(jsonUtil.setDefaults).toHaveBeenCalledTimes(1);
             expect(jsonUtil.setJson).toHaveBeenCalledTimes(1);

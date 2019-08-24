@@ -2,11 +2,13 @@ import { IFileUtil } from '../interfaces/IFile.Util';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { IJsonUtil } from '../interfaces/IJSon.Util';
+import { injectable } from 'inversify';
 
 export interface IJSON {
     [key: string]:any;
 }
 
+@injectable()
 export class JsonUtil implements IJsonUtil {
 
     public constructor(private fileUtil: IFileUtil) {}
