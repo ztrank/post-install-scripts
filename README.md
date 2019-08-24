@@ -14,15 +14,16 @@ This file needs to create a new instance of any of the Utils that the pipeline s
 
 ### Example
 ```typescript
+import 'reflect-metadata'; // Important!
 import { SetJsonDefaults, Bind } from '@trankzachary/post-install-scripts';
 import { Container } from 'inversify';
 import { AppConfigDefaults, WebConfigDefaults, MachineConfigDefaults } from '../path/to/defaults';
 
 const container = new Container();
 Bind(container)
-    .register(container, SetJsonDefaults, false, 'app.config.json')
-    .register(container, SetJsonDefaults, false, 'web.config.json')
-    .register(container, SetJsonDefaults, false, 'machine.config.json')
+    .register(container, SetJsonDefaults, AppConfigDefaults, false, 'app.config.json')
+    .register(container, SetJsonDefaults, WebConfigDefaults, false, 'web.config.json')
+    .register(container, SetJsonDefaults, MachineConfigDefaults, false, 'machine.config.json')
     .run(container)
     .subscribe(() => {});
 ```
