@@ -2,7 +2,8 @@ import { IFileUtil } from '../interfaces/IFile.Util';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { IJsonUtil } from '../interfaces/IJSon.Util';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
+import { PipelineSymbols } from '../../symbols';
 
 export interface IJSON {
     [key: string]:any;
@@ -11,7 +12,9 @@ export interface IJSON {
 @injectable()
 export class JsonUtil implements IJsonUtil {
 
-    public constructor(private fileUtil: IFileUtil) {}
+    public constructor(
+        @inject(PipelineSymbols.FileUtil) private fileUtil: IFileUtil
+    ) {}
 
     public setDefaults(result: IJSON, defaults: IJSON, overwrite: boolean = false): IJSON {
         Object.getOwnPropertyNames(defaults).forEach(key => {
